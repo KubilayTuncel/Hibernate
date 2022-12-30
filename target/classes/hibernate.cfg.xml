@@ -36,8 +36,10 @@
 
         <property name="format_sql">true</property>
 
+        <!-- addAnnatotedClass() yapisini kullanmadan asagidaki gibi mapping yazarak Entitiy classlarimizi hallederek halledebiliriz.
         <mapping class="com.hb05.manytoone.Student05"/>
         <mapping class="com.hb05.manytoone.University"/>
+        -->
 
     </session-factory>
 
