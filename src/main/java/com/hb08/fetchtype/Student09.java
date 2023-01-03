@@ -1,67 +1,56 @@
-package com.hb06.bi_onetomany;
+package com.hb08.fetchtype;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="t_student07")
-public class Student07 {
+public class Student09 {
 
     @Id
     private int id;
 
-    @Column(name="student_name", nullable = false,length = 100)
+    @Column(name="student_name",nullable = false)
     private String name;
 
     private int grade;
-
-    @OneToMany (mappedBy = "student",orphanRemoval = true,cascade = CascadeType.REMOVE) //cascadetype.remove ana objeyi silersen child ini da sil
-    private List<Book07> bookList = new ArrayList<>();                                  //orphanREmoval ile cascade de ayni isi yapar.
-
-    public Student07(int id, String name, int grade) {
-        this.id = id;
-        this.name = name;
-        this.grade = grade;
-    }
-
-    public Student07 (){}
-
+    /*
+    OneToMany       -->LAZY
+    ManyToMany      -->LAZY
+    ManytoOne       -->EAGER
+    OnetoOne        -->EAGER
+     */
+    @OneToMany(mappedBy = "student" , cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Book09> bookList = new ArrayList<>();
+    // Getter - Setter
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
-
     public String getName() {
         return name;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public int getGrade() {
         return grade;
     }
-
     public void setGrade(int grade) {
         this.grade = grade;
     }
-
-    public List<Book07> getBookList() {
+    public List<Book09> getBookList() {
         return bookList;
     }
-
-    public void setBookList(List<Book07> bookList) {
+    public void setBookList(List<Book09> bookList) {
         this.bookList = bookList;
     }
-
+    // toString()
     @Override
     public String toString() {
-        return "Student07{" +
+        return "Student09{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", grade=" + grade +

@@ -1,31 +1,34 @@
-package com.hb06.bi_onetomany;
+package com.hb07.manytomany;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name="t_student07")
-public class Student07 {
+@Table(name="t_student08")
+public class Student08 {
 
     @Id
     private int id;
 
-    @Column(name="student_name", nullable = false,length = 100)
+    @Column(name="std_name",length = 100, nullable = false)
     private String name;
 
     private int grade;
 
-    @OneToMany (mappedBy = "student",orphanRemoval = true,cascade = CascadeType.REMOVE) //cascadetype.remove ana objeyi silersen child ini da sil
-    private List<Book07> bookList = new ArrayList<>();                                  //orphanREmoval ile cascade de ayni isi yapar.
+    @ManyToMany
+    @JoinTable(name="student08_book08",
+            joinColumns = {@JoinColumn(name="std_id")},
+            inverseJoinColumns = {@JoinColumn(name="book_id")})
+    private List<Book08> bookList = new ArrayList<>();
 
-    public Student07(int id, String name, int grade) {
+    public Student08(int id, String name, int grade) {
         this.id = id;
         this.name = name;
         this.grade = grade;
     }
 
-    public Student07 (){}
+    public Student08 () {}
 
     public int getId() {
         return id;
@@ -51,17 +54,17 @@ public class Student07 {
         this.grade = grade;
     }
 
-    public List<Book07> getBookList() {
+    public List<Book08> getBookList() {
         return bookList;
     }
 
-    public void setBookList(List<Book07> bookList) {
+    public void setBookList(List<Book08> bookList) {
         this.bookList = bookList;
     }
 
     @Override
     public String toString() {
-        return "Student07{" +
+        return "Student08{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", grade=" + grade +

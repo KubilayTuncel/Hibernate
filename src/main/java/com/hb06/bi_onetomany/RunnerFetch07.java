@@ -19,9 +19,9 @@ public class RunnerFetch07 {
         Session session = sf.openSession();
         Transaction tx = session.beginTransaction();
 
-       Student07 student1 = session.get(Student07.class,1001);
-        System.out.println(student1);
-        student1.getBookList().forEach(b-> System.out.println(b));
+       //Student07 student1 = session.get(Student07.class,1001);
+        //System.out.println(student1);
+        //student1.getBookList().forEach(b-> System.out.println(b));
 
         //SQL ile ögrenci bilgilerini alalim
 
@@ -34,6 +34,43 @@ public class RunnerFetch07 {
         List<Object[]> resulList2 = session.createQuery(hqlQuery).getResultList();
 
         resulList2.forEach(t-> System.out.println(Arrays.toString(t)));
+
+        //!!! delete islemi SQL
+
+        String sqlQuery2 = "delete from t_book07";
+        //int nummerOfDeletedReport = session.createSQLQuery(sqlQuery2).executeUpdate();
+        //System.out.println("Silinen kayit sayisi : "+nummerOfDeletedReport);
+
+        //!!! delete islemi hql
+
+        String hqlQuery2 = "delete from Student07";
+        //int deletedStudent = session.createQuery(hqlQuery2).executeUpdate();
+        //System.out.println("Silinen Student sayisi : "+deletedStudent);
+
+        // Kitap ismi Abook olan Kitabi silme
+        String hqlQuery3 = "delete from Book07 b where b.name='A Book'";
+        //int deletedABook = session.createQuery(hqlQuery3).executeUpdate();
+        //System.out.println("A book silindi :"+deletedABook);
+
+
+        //Kitap bilgisi olan bir ögrenciyi silmek istersek 2 yolu vardir.
+        //1) Önce book tablosundan iliskili oldugu kitaplar silinir
+            //daha sonra istenen student objesi silinir.
+        //2) Student entity clasinin ilgili yerine orphanRemoval
+
+        //!!!1001 id li student ojemi delete methoduyla silelim.
+       // Student07 student2 = session.get(Student07.class,1001);
+        //session.delete(student2);
+        //orphanRemoval true ya sset edildiginde  child tabloda null 'a setli kismlari da otomatik siler.
+
+        //!!! book ismi icinde Java gecen student kayitlarini alalim(HQL)
+
+        String hqlQuery4 = "select s from Student07 s inner join s.bookList b where b.name like '%Java%'";
+        List<Student07> student3 = session.createQuery(hqlQuery4,Student07.class).getResultList();
+
+        student3.forEach(t-> System.out.println(t));
+
+
 
 
         tx.commit();
