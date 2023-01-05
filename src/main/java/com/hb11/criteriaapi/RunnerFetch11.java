@@ -8,6 +8,7 @@ import org.hibernate.query.Query;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Random;
@@ -90,6 +91,22 @@ public class RunnerFetch11 {
         Query<Student11> query4 = session.createQuery(criteriaQuery);
         List<Student11> resultList4 = query4.getResultList();
         resultList4.forEach(t-> System.out.println(t));
+
+        //5.Örnek id si 1 veya grade i 80 den büyük olan recordu bulalim.
+
+        Long id =1001L;
+
+        Predicate predicateForId = cb.equal(root.get("id"),id);
+        Predicate predicateForGrade = cb.greaterThan(root.get("grade"),80);
+
+        Predicate predicateQuery = cb.or(predicateForId,predicateForGrade);
+
+        criteriaQuery.where(predicateQuery);
+        Query<Student11> query5 = session.createQuery(criteriaQuery);
+        List<Student11> resultList5 = query5.getResultList();
+        resultList5.forEach(t-> System.out.println(t));
+
+
 
         tx.commit();
         session.close();
